@@ -1,0 +1,127 @@
+{
+	"info": {
+		"name": "Workbook - Dynamics CRM",
+		"_postman_id": "4c67acaf-1f06-5b3a-7a5e-cb2cd815d606",
+		"description": "Web API\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sample Query: Get contact name based on email",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkhIQnlLVS0wRHFBcU1aaDZaRlBkMlZXYU90ZyIsImtpZCI6IkhIQnlLVS0wRHFBcU1aaDZaRlBkMlZXYU90ZyJ9.eyJhdWQiOiJodHRwczovL2Fkb2JlaW8uY3JtLmR5bmFtaWNzLmNvbS8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mMGM5ZWI4My1iZTA5LTQ5NzktODE2YS1iZjk3M2Q5ZWVmNWQvIiwiaWF0IjoxNTA1Nzc0NjUwLCJuYmYiOjE1MDU3NzQ2NTAsImV4cCI6MTUwNTc3ODU1MCwiYWNyIjoiMSIsImFpbyI6IlkyVmdZTkJVZm1idjJjTzdqT0dIbDVGNkJUT2p5cU1uL2JubkR1UlZDTW1IK05SYjlnRUEiLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiZTRiNzRjMTktYzFiNi00Y2IzLTllMWUtYmU3YmE0NDg4MzQyIiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJYdSIsImdpdmVuX25hbWUiOiJTYXJhaCIsImlwYWRkciI6IjE5Mi4xNTAuMTAuMjAxIiwibmFtZSI6IlNhcmFoIFh1Iiwib2lkIjoiYzlkY2Y2ZWItNjFkNi00ZWQzLTk4Y2EtMTc4NDFjMWM4MGMxIiwicHVpZCI6IjEwMDM3RkZFQTRCQzFEMzQiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJ1b2l2cFZqVVBTdno5VTRtRlJ4VHhFcVE3Q2dWTEZNRkxpbndjSDRMX1hVIiwidGlkIjoiZjBjOWViODMtYmUwOS00OTc5LTgxNmEtYmY5NzNkOWVlZjVkIiwidW5pcXVlX25hbWUiOiJzYXh1QGFkb2JlSU8ub25taWNyb3NvZnQuY29tIiwidXBuIjoic2F4dUBhZG9iZUlPLm9ubWljcm9zb2Z0LmNvbSIsInZlciI6IjEuMCIsIndpZHMiOlsiNjJlOTAzOTQtNjlmNS00MjM3LTkxOTAtMDEyMTc3MTQ1ZTEwIl19.La-5P729M51uW57CNU_sUFhVsxSZ3LPreJVPZ02li2gwtz8WxPx2vi_kzbeoW8tZVZazz9bFhcNWF2JNlmK3ANjUazY35Rk82DH08RWpyWTwIFpzEtNdgrhGPXnGQHIwrmqMaQz7Nfb4GxD1gsdtMGgbQfjin3QHhYVz3HuZqcewamedAFGT2VM304qGzoUCCCthe4Dj28NY2niOs8KvJc5ApN6Ls-NTlXrhvJ7LAwHh_KlV_VlzeJoeMSw_i2mHB6y4RguEurXDqiS4ufhMJ_GoTv6CY7v6QwhA6JLm8z5e0juReWH9ubFtpPTlCIyj2WY-g5itJwcnVJrYwMv-tg"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://adobeio.crm.dynamics.com/api/data/v8.2/accounts?$select=name,revenue&$top=20&$filter=revenue%20gt%20100000",
+					"protocol": "https",
+					"host": [
+						"adobeio",
+						"crm",
+						"dynamics",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						"v8.2",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "name,revenue",
+							"equals": true
+						},
+						{
+							"key": "$top",
+							"value": "20",
+							"equals": true
+						},
+						{
+							"key": "$filter",
+							"value": "revenue%20gt%20100000",
+							"equals": true
+						}
+					]
+				},
+				"description": "(top 20, name and revenue, with revenue > certain number)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get contact using email",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://adobeio.crm.dynamics.com/api/data/v8.2/contacts?$filter=contains(emailaddress1,'saxu@adobe.com')",
+					"protocol": "https",
+					"host": [
+						"adobeio",
+						"crm",
+						"dynamics",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						"v8.2",
+						"contacts"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "contains(emailaddress1,'saxu@adobe.com')",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get contact using contact id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://adobeio.crm.dynamics.com/api/data/v8.2/contacts(e14bbe0e-d89c-e711-8101-5065f38af8b1)",
+					"protocol": "https",
+					"host": [
+						"adobeio",
+						"crm",
+						"dynamics",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						"v8.2",
+						"contacts(e14bbe0e-d89c-e711-8101-5065f38af8b1)"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

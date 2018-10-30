@@ -1,0 +1,309 @@
+{
+	"info": {
+		"name": "Workbook - Campaign API",
+		"_postman_id": "18837c04-e652-950a-b848-6a356c3ae1a5",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET top 10 profiles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/profileAndServices/profile/email?_lineCount=10",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"profileAndServices",
+						"profile",
+						"email"
+					],
+					"query": [
+						{
+							"key": "_lineCount",
+							"value": "10",
+							"equals": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"equals": false,
+							"disabled": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "GET profiles by email",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/profileAndServices/profile/byEmail?email=saxu@adobe.com",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"profileAndServices",
+						"profile",
+						"byEmail"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"equals": false,
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "saxu@adobe.com",
+							"equals": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "POST to create a new profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"Sarah\", \"lastName\":\"Xu\",\"email\":\"sarahsfakeemail@adobe.com\"}"
+				},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/profileAndServices/profile",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"profileAndServices",
+						"profile"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"equals": false,
+							"disabled": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH to update a profile",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"Sarah\", \"lastName\":\"Xu\",\"email\":\"YES@adobe.com\"}"
+				},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/profileAndServices/profile/@RarkoN8a-BwtcL19K_PGZQLOIs64S7QOO01pws7gJv_Y2sKreSNGVJrYN9-kBzAhh4RgZ83RC9HbgjvUcp1zNzwcgQA",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"profileAndServices",
+						"profile",
+						"@RarkoN8a-BwtcL19K_PGZQLOIs64S7QOO01pws7gJv_Y2sKreSNGVJrYN9-kBzAhh4RgZ83RC9HbgjvUcp1zNzwcgQA"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Transational M - Trigger a message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=utf-8"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"saxu@adobe.com\",\"ctx\":{\"LastName\":\"World\",\"FirstName\":\"Hello\", \"account\":\"Adobe\",\"discount\":\"10\",\"PersonalMessage\":\"Good to see you back!\"}}"
+				},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/mcadobeiosolutionsdemo/EVTcartAbandonment",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"mcadobeiosolutionsdemo",
+						"EVTcartAbandonment"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"equals": false,
+							"disabled": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Transational M - Checking event status based on PKey",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://mc.adobe.io/{{tenant}}/campaign/mcadobeiosolution/EVTcartAbandonment/@Jsu5XiZTS8lwTtKnwIrNFe5qbA4EsHqdsDKnJMcZtWnowq3OM0Dam2DgulUVvy5RnDSkNJbgz3LP1DFQzsL_UfCHuC4",
+					"protocol": "https",
+					"host": [
+						"mc",
+						"adobe",
+						"io"
+					],
+					"path": [
+						"{{tenant}}",
+						"campaign",
+						"mcadobeiosolution",
+						"EVTcartAbandonment",
+						"@Jsu5XiZTS8lwTtKnwIrNFe5qbA4EsHqdsDKnJMcZtWnowq3OM0Dam2DgulUVvy5RnDSkNJbgz3LP1DFQzsL_UfCHuC4"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"equals": false,
+							"disabled": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		}
+	]
+}

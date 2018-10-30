@@ -1,0 +1,11 @@
+{
+  "name": "campaign-sample",
+  "version": "0.0.1",
+  "main": "./app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "jwt-simple": "0.5.1"
+  }
+}
