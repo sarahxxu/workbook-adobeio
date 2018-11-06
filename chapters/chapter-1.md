@@ -10,7 +10,7 @@ In this step, we'll access Analytics to set up your own Analytics report suite.
 #### Create new Report Suite in Analytics
 - In Analytis, go to `Admin` -> `Report Suites`, and click `Create New` -> `Report Suite`.
     - In the set up screen, for `Report Suite ID` and `Site Title` please use `ioworkshop` + your assigned user ID (e.g. `ioworkshopuser01`) to avoid conflict.
-    - Please make sure you are creating this Report Suite as an Analytics Product Admin, otherwise your Report Suite may not show up in the next step
+    - Please make sure you are creating thi Report Suite as an Analytics Product Admin, otherwise your Report Suite may not show up in the next step
 
 ---
 
@@ -33,10 +33,15 @@ Follow these steps to set up an Analytics extension with Launch:
 
 Now that we have a high-level extension set up, let's add an Analytics rule as below:
 - Select the `Rule` tab
+- Select `Data Elements` tab
+    - click `Add Data Element`
+    - for Name use `pageURL`
+    - for Data Element type select `Page Info`
+    - for Attribute, select `URL` 
 - In the Rule set up:
     - for `Events`, add `Core - Page Bottom`
     - for `Then`, add two actions: `Adobe Analytics - Set Variables` THEN `Adobe Analytics - Send Beacon`
-        - In the `Adobe Analytics-Set Variables` action, add `eVar3` as `%window.location.host%%window.location.pathname%`
+        - In the `Adobe Analytics-Set Variables` action, add `eVar3`, select from the data element `pageURL`
 - Go to `Adapters`, click on `Add Adapter` and create an akamai adapter as shown below.
 
 Now that we have the extension set up, let's deploy it. 
