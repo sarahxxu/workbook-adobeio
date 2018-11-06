@@ -29,7 +29,7 @@ Follow these steps to set up an Analytics extension with Launch:
     - You can use `example.com` for the domain name
 - Go to `Extensions`→`Catalog` and install Adobe Analytics extension. Enter the Adobe Analytics report suite name (the one you just set up) manually in the textbox.
     - Note: You can get the full report suite id in Adobe Analytics->Admin→Report Suites
-- Add `Experience Cloud ID Service` extensions with default settings and click save. 
+- Install `Experience Cloud ID Service` extensions with default settings and click save. 
 
 Now that we have a high-level extension set up, let's add an Analytics rule as below:
 - Select the `Rule` tab
