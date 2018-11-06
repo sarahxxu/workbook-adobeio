@@ -4,7 +4,8 @@
 - Go to [Adobe Admin Console](https://adminconsole.adobe.com) and make sure you have access to the workshop org
     - Refer to [Admin Console helpx page](https://helpx.adobe.com/enterprise/using/admin-console.html)  if you run into issues accessing your org. 
 - In your organization, make sure you have access to the following Adobe Solutions
-    - Dynamic Tag Manager
+    - Adobe Launch
+    - Launch API
     - Analytics & Triggers
     - Campaign Standard
 

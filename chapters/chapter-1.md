@@ -17,29 +17,81 @@ In this step, we'll access Analytics to set up your own Analytics report suite.
 ### Integrate AEM with Analytics using DTM
 Now that you have your own Analytics report suite, we'll link it with your local AEM instance using DTM in this section.
 
-#### Enable DTM for AEM Site
-To begin, please follow beginning three sections on this [helpx page](https://helpx.adobe.com/experience-manager/using/integrate-digital-marketing-solutions.html) to enable DTM for your We.Retail site:
-- [Create the DTM rule](https://helpx.adobe.com/experience-manager/using/integrate-digital-marketing-solutions.html#CreatetheDTMrule)
-    - Make sure you are using the Analytics company in workshop info, and for your property, please use `ioworkshop` + your assigned user ID (e.g. `ioworkshopuser01`) to avoid conflict
-- [Configure AEM to use DTM Rules](https://helpx.adobe.com/experience-manager/using/integrate-digital-marketing-solutions.html#ConfigureAEMtouseDTMRules)
-- [Embed DTM rules in AEM web pages](https://helpx.adobe.com/experience-manager/using/integrate-digital-marketing-solutions.html#EmbedDTMrulesinAEMwebpages)
+#### Enable Launch for AEM Site
 
-If you followed the instructions step by step, you should now see an alert box when you access the We.Retail home page.
+Adobe Launch is the next generation of Dynamic Tag Management. It provides a platform-based approach to building DTM extensions and a streamlined distribution system to quickly deploy client-side DTM libraries. Custom resources can now be created and reused within DTM to simplify the distribution of client side web applications.
 
-#### Update your DTM Configuration
-Once you are done, let's update your DTM property setting to deactivate the alert and to use an eVar to pick up your page URL. 
+Follow these steps to set up an Analytics extension with Launch:
+- Go to launch.adobe.com
+- Create new `Property`
+- Enter `Property` details
+    - Use personalized name for the property to avoid conflict
+    - You can use `example.com` for the domain name
+- Go to `Extensions`→`Catalog` and install Adobe Analytics extension. Enter the Adobe Analytics report suite name (the one you just set up) manually in the textbox.
+    - Note: You can get the full report suite id in Adobe Analytics->Admin→Report Suites
+- Add `Experience Cloud ID Service` extensions with default settings and click save. 
 
-##### Configure Analytics with DTM
-- Go to the `Overview` page for your property, click `Add a Tool`, and add Adobe Analytics. Choose `automatic` for configuration, and it will prompt you to the set up page.
-    - For `Report Suites` choose the report suite you just created for production and stage.
-    - Expand `Global Variables` and set eVar3 to capture the page url
-```eVar3="%window.location.host%%window.location.pathname%"```
-        - if this did not work for you, please try to create a data element with JavaScript, and put in the data element for the eVar value
-    - Save your tool configuration for Analytics.
+Now that we have a high-level extension set up, let's add an Analytics rule as below:
+- Select the `Rule` tab
+- In the Rule set up:
+    - for `Events`, add `Core - Page Bottom`
+    - for `Then`, add two actions: `Adobe Analytics - Set Variables` THEN `Adobe Analytics - Send Beacon`
+        - In the `Adobe Analytics-Set Variables` action, add `eVar3` as `%window.location.host%%window.location.pathname%`
+- Go to `Adapters`, click on `Add Adapter` and create an akamai adapter as shown below.
 
-##### Remove the test rule
-- Go to your AlertJS rule, and click `Deactivate Rules` to deactivate it.
-- Approve and publish all your changes.
+Now that we have the extension set up, let's deploy it. 
+- Go to `Environments` and create `Dev`, `Stage` and `Production` environment.
+- Save Rule and go to `Publishing`, Click on `Add New Library`.
+- Give name for the build, select Dev (Development) environment and then click `Add all changed resources`.
+- Build for development and staging and approve for production.
+
+##### Configure Launch with AEM
+
+**For Launch with AEM 6.4**
+Here's a video:https://helpx.adobe.com/experience-manager/kt/integration/using/adobe-launch-integration-tutorial-understand.html
+
+Here's the steps breakdown
+- Go to https://console.adobe.io
+- Click on "New Integration".
+- Select "Access an API" and click on continue.
+- Select "Launch, by Adobe" and click on continue.
+- Select "New Integration" for fresh setup and click on continue.
+- Open the AEM instance in new window (http://localhost:4502) click on `Tools`->Security→Adobe IMS Configurations.
+- Create new Adobe IMS Configuration certificate.
+- Download the public key certificate by clicking on "Download Public Key", this certificate needs to be uploaded in the I/O console integration.
+- Come to I/O Console Integration window upload the downloaded AEM-Adobe-IMS.crt in Public Key Certificates.
+- Copy the Client ID, Client Secret from Overview and the JWT Payload and Authorization Server info from "JWT" tab.
+- Come back to the AEM IMS Configuration next step, fill out details from I/O Console integration. Save the configuration.
+- Go to AEM Instance->Tools→Cloud Services→Adobe Launch Configurations.
+- Create a new configuration under we-retail website. Select the IMS Config, company and property based on the property and report suite you just created. 
+- Go to AEM instance->Sites.
+- Select "Card View" from upper right corner and click on (info) properties icon.
+- Go to Advanced tab and select Cloud Configuration under Configuration.
+- Select the we-retail path and save & close the configuration.
+- Open the We-Retail website→Right click->Inspect→Click on Sources. You will see that the Launch scripts is getting fired and events are flowing in the designated report suite.
+
+**For Launch with AEM 6.3**
+AEM 6.3 doesn't have the official connector for Launch. To connect your AEM 6.3 instance with Launch you can follow the below work around:
+
+- Go to your DTM account. (dtm.adobe.com)
+- Create a dummy empty property `Adobe_Launch` (please add your name to this to avoid conflict). Please do not customize this property as we are not going to use it in our integration.
+- Go to AEM 6.3 instance. (e.g. http://localhost:4502/) click on `Tools` (Left panel->The hammer icon).
+- Go to `Deployment` and click on `Cloud Services`.
+- Locate `Dynamic Tag Management` and click `Configure Now`.
+- Provide Title and Name for configuration and click on Create.
+- Go to your Dynamic Tag Management profile. Click on DTM Account and copy the API Token.
+- Paste the API token to AEM→DTM Configuration window and click `Connect To DTM`.
+- Select company and the dummy property that we created in step 2.
+- Click on Staging Settings and Production Settings and uncheck the `Use Self Hosting`.
+- Go to Launch->Environments→Staging and copy the header code and replace it in AEM→DTM Configuration Staging Settings Header code section.
+- Go to Launch->Environments→Production and copy the header code and replace it in AEM→DTM Configuration Production Settings Header code section. Click Ok.
+- After the configuration it should look like this. Ensure that the scripts are the ones from Launch environments.
+- Go to AEM instance (http://localhost:4502/) and click on Sites.
+- Open the page in "Card View" from the upper right corner.
+- Click on the "Properties" icon (info) for the website which you want to connect to Launch.
+- Go to Cloud Services→Add Configuration→Select Dynamic Tag Management
+- Select the Launch integration you created in previous steps. Click Save and Close.
+- Open the We-Retail website→Right click->Inspect→Click on Sources. You will see that the Launch scripts is getting fired and events are flowing in the designated report suite.
 
 #### Test your updated rules in AEM
 If your rules have been successfully updated, go back to your We.Retail home page, and open your Analytics debug tool. You should see analytics calls with your report suite and eVar3 as page url captured.
