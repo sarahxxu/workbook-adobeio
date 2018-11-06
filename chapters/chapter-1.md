@@ -10,12 +10,12 @@ In this step, we'll access Analytics to set up your own Analytics report suite.
 #### Create new Report Suite in Analytics
 - In Analytis, go to `Admin` -> `Report Suites`, and click `Create New` -> `Report Suite`.
     - In the set up screen, for `Report Suite ID` and `Site Title` please use `ioworkshop` + your assigned user ID (e.g. `ioworkshopuser01`) to avoid conflict.
-    - Please make sure you are creating thi Report Suite as an Analytics Product Admin, otherwise your Report Suite may not show up in the next step
+    - Please make sure you are creating this Report Suite as an Analytics Product Admin, otherwise your Report Suite may not show up in the next step
 
 ---
 
-### Integrate AEM with Analytics using DTM
-Now that you have your own Analytics report suite, we'll link it with your local AEM instance using DTM in this section.
+### Integrate AEM with Analytics using Launch
+Now that you have your own Analytics report suite, we'll link it with your local AEM instance using Launch in this section.
 
 #### Enable Launch for AEM Site
 
