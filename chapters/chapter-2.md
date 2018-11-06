@@ -165,6 +165,8 @@ ok: got action webhook
 https://runtime.adobe.io/api/v1/web/<namespace>/default/webhook
 ```
 
+**Important note: please use `https://adobeioruntime.net` in replacement of `https://runtime.adobe.io` during this workshop. Due to a recent change -- the domain name for Adobe I/O Runtime has been changed. **
+
 ---
 ---
 ##### Explore #2
