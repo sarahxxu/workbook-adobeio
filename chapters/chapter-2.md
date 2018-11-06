@@ -174,8 +174,8 @@ Try opening this URL in your web browser. What did you get? How can you attach t
 
 Or try invoking the Action by using different curl commands. What did you get as a result?
 ```
-curl https://runtime.adobe.io/api/v1/web/<namespace>/default/webhook?challenge=1
-curl https://runtime.adobe.io/api/v1/web/<namespace>/default/webhook.json -d "challenge"="hello"
+curl https://adobeioruntime.net/api/v1/web/<namespace>/default/webhook?challenge=1
+curl https://adobeioruntime.net/api/v1/web/<namespace>/default/webhook.json -d "challenge"="hello"
 ```
 ---
 ---
