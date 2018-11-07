@@ -116,8 +116,8 @@ Now that we have Analytic set up with your AEM site via DTM, we can start to set
     - Select the Report Suite that you just created.
 - On the Triggers Settings page, define the business rules for your trigger. You can drag a dimension/metric box from the left panel to the right side of the screen and then specify the business rules for what must happen and what must not happen in a session. 
     - For your rules, set it to
-        - Visit must include `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/cart.html"` OR `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout.html"` OR ` Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout/order.html"`
-        - Visit must not include `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout/order/thank-you.html"`
+        - Visit must include Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/cart.html OR Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout.html OR Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout/order.html
+        - Visit must not include Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout/order/thank-you.html
     - For `Trigger after no action for`, set it to 10 minutes
     - For Include Meta Data, set it to include `Custom eVar 3`
 - Save your changes and now you should see your Triggers definition displayed.
