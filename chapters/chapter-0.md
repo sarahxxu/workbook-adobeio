@@ -5,8 +5,7 @@
     - Refer to [Admin Console helpx page](https://helpx.adobe.com/enterprise/using/admin-console.html)  if you run into issues accessing your org. 
 - In your organization, make sure you have access to the following Adobe Solutions
     - Adobe Launch
-    - Launch API
-    - Analytics & Triggers
+    - Analytics & Triggers (Data Workbench)
     - Campaign Standard
 
 ---
@@ -30,10 +29,16 @@ In this workshop you would need the following items set on on your local:
 - [OpenWhisk CLI](https://github.com/apache/incubator-openwhisk-cli/releases)
     - Download the executable from the [OpenWhisk GitHub repository](https://github.com/apache/incubator-openwhisk-cli/releases). Choose the version that matches your operating system and download the compressed archive.
     - Extract the executable from the compressed archive and place it in a folder of your choice.
-    - Add the folder into which you placed the executable to your `PATH` environment variable. This enables you to call the CLI from any command-line window.
+    - Add the folder into which you placed the executable to your `PATH` environment variable. This enables you to call the CLI from any command-line window. Or you use the CLI directly in the folder using `./wsk`.
 
 For Windows user, please make sure you have Shell and the following set up
-- [OpenSSL](https://www.openssl.org)
+- [OpenSSL](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip)
+
+Further OpenSSL instructions for Windows users:
+- Extract the folder and copy it to the C:/libs/ location
+- set OPENSSL_CONF=C:/libs/openssl-1.1.1-win64-mingw/openssl.cnf
+- cd C:/libs/openssl-1.1.1-win64-mingw/
+- openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt
 
 #### Recommended tools
 - In-browser Analytics debug tools (Chrome)
