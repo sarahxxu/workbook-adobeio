@@ -23,7 +23,7 @@ Download the resources listed on top and make sure they are accessible on your l
 
 #### Required tools
 In this workshop you would need the following items set on on your local:
-- Adobe Experience Manager instance (6.2 or 6.3 preferred)
+- Adobe Experience Manager instance (6.4 preferred)
   - [We.Retail Sample site](https://github.com/Adobe-Marketing-Cloud/aem-sample-we-retail/releases) (Please make sure you are installing a version compatible with your AEM version)
 - [Postman](https://www.getpostman.com/apps)
 - [OpenWhisk CLI](https://github.com/apache/incubator-openwhisk-cli/releases)
