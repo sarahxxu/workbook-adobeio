@@ -1,205 +1,283 @@
-# 3.  Connect to Adobe Campaign Standard from Runtime
-In this section, we'll step through the process of setting up Analytics, connect your Analytics instance with AEM, use Analytics to configure your first Trigger, and get your first Trigger to fire.
+# 3. Receive your Trigger in a Runtime action
+Now that we have Triggers working, we'll walk through the I/O Events set up process, and create an action in I/O Runtime to listen to your Trigger events.
 
-#### Add Campaign to your Integration
-- After signing in to the [Adobe I/O Console](https://console.adobe.io/), find your last integration.
+### Create an integration in Console for Triggers Events
+In this step, we will use Adobe I/O Console to add to your integration and allow you to link webhooks with your Triggers Events.
+
+#### Add to your existing integration
+- After signing in to the [Adobe I/O Console](https://console.adobe.io/), find the integration you created with Target.
     - If you are in multiple Adobe orgs, please make sure you are in the workshop org.
-- Choose `Services` tab, scroll down to find "Adobe Campaign", select "Add Service"
+- Go to `Events` tab, select `Analytics Triggers` as an event provider under `Marketing Cloud`
 
-### Generate a JWT Token and Access Token
-- Go to the `JWT` tab
-- Find the `private.key` file you made from the last chapter, and paste it into the `Paste private key` section
-- Upon success, you should see a curl command generated.
-- Copy the curl command into your Terminal to retrieve your access token.
-
-### Familiarize with Campaign Standard API
-With the Adobe Campaign Standard API, you get access to the following functionalities:
-
-- Manage Profiles
-- Manage subscriptions to Services
-- Send Transactional Messages
-- Retrieve data from your customized data model
-
-Adobe Campaign APIs must be used Server to Server only.
-
-Before diving into code, let's use the Postman to play with this API
-
-#### Set up the API
-- Launch Postman, and upload the Campaign Standard API Postman collection you downloaded. 
-- Before making the calls, you'd need to set up an environment in Postman for this API collection, and put in the following key/value. You can find the cooresponding values in the Workshop Credentials section on top.
-    - `tenant` -> Campaign Tenant
-    - `access_token` -> the access token you just generated with curl
-    - `api_key` -> find the API key from your integration
-
-#### Standard calls with Profile
-There are four default calls related to Profile in that collection. Play with them to see if you can add your own Profile and update it!
-- `GET` top 10 profiles / by email
-- `POST` to create new profile
-- `PATCH` to update profile
-
-
----
----
-
-##### Explore #3
-If you've tried these four, tweak the call to see what else you can do with profile and data via the Campaign Standard API.
-Refer to [Campaign Standard API Documentation](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#let-39-s-start-with-the-api) for some idea!
-
----
----
-
-#### Transactional Message
-These two calls related to Transactional message are defaulted to a Transactional Event I've set up in Campaign Standard. In `Transactional M - Trigger a message`, modify the body of the call to use your email, and see what the sample email looks like in your inbox! 
+#### Event Registration
+- Under Event Registration, you'll be asked to put in name and description. In addition, you can choose the Trigger you want to subscribe to on the right side. Only subscribe to the Triggers you've created to avoid conflict.
+- Leave the `Webhook URL` blank for now. We'll come back to put in a Runtime action
 
 ---
 
-### Add Campaign Standard to your Console Integration
-Then, let's switch over so that you are using your own Campaign API integration in this demo. 
-- After signing in to the [Adobe I/O Console](https://console.adobe.io/), find your existing Integration.
-- Navigate to the `Services` tab, and click `Adobe Campaign` to add it to your existing integration
+### Create a Webhook in Runtime
+With Adobe I/O Events webhooks, your application can sign up to be notified whenever certain events occur. For example, when a user uploads a file to Adobe Creative Cloud Assets, this action generates an event. With the right webhook in place, your application is instantly notified that this event happened.
 
----
+To start receiving events, you register a webhook, specifying a webhook URL and the types of events you want to receive. Each event will result in a HTTP request to the given URL, notifying your application.
 
-### Using an API in Runtime
-In this section Campaign Standard as an example to show how you can *currenty* work with an Adobe API in Runtime.
+With our Runtime knowledge, let's set up a webhook in Runtime.
 
-#### Authentication
-Any API that accesses a service or content on behalf of an end user authenticates using the OAuth and JSON Web Token standards. For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access.
-
-For more details, please refer to [Service Account Integration documentation](https://www.adobe.io/apis/cloudplatform/console/authentication/jwt_workflow.html)
-
-The JWT Workflow contains 6 steps
-- 1- Create a Public Key Certificate
-- 2- Subscribe to a Service or Event Provider
-- 3- Configure a Service Account Integration
-- 4- Secure your Client Credentials
-- 5- Create your JSON Web Token (JWT)
-- 6- Exchange your JWT for an Access Token
-
-We have completed 1-4 in previous steps, we'll focus on step 5 and 6 in the next section. 
-
-**5- Create your JSON Web Token (JWT)**
-Use your client credentials generated for your integration to create a JWT, and sign it with your private key. The JWT encodes all of the identity and security information that Adobe needs to verify your identity and grant you access to Adobe services and events.
-
-Several public libraries are available for creating a JWT. The JWT must be digitally signed and base-64 encoded for inclusion in the access request. 
-
-
-**6- Exchange your JWT for an Access Token**
-
-To initiate an API session, you use the JWT to obtain an access token from Adobe, by making a POST request to Adobe's Identity Management Service (IMS).
-
-Send a POST request to:
-```
-https://ims-na1.adobelogin.com/ims/exchange/jwt/
-```
-
-The body of the request should contain URL-encoded parameters with your Client ID (API Key), Client Secret, and JWT:
-```
-client_id={api_key_value}&client_secret={client_secret_value}&jwt_token={base64_encoded_JWT}
-```
-
-Sample Request
+#### Sample Webhook set up
+Grab the `sample-webhook.js` file you downloaded, and add it to your Runtime namespace. Can you figure out what this action does?
 
 ```
-curl -X POST \
-  https://ims-na1.adobelogin.com/ims/exchange/v1/jwt \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'jwt_token={encoded-jwt}&client_id={client-id}&client_secret={client-secret}'
+wsk action create webhook sample-webhook.js --web true --kind nodejs:6
 ```
 
-Sample Response
+Invoke the action with a challenge 
+
+```
+wsk action invoke webhook --result --blocking --param challenge hello
+```
+
+You should see the following response
+
 ```
 {
-  "token_type": "bearer",
-  "access_token": "{encoded-token}",
-  "expires_in": 86399981
+    "body": "eyJjaGFsbGVuZ2UiOiJoZWxsbyJ9",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "statusCode": 200
 }
 ```
 
-Now that we've walked through the high level task, let's dig in to see 1) how you can use I/O Console as a helper in this process and 2) how you can do it programatically.
+If we decode the body
 
-##### a - Console as helper
-The Console has built-in functionality to help you generate a signed and encoded JWT, and provides a customized curl command that helps you exchange for the access token. 
+```
+echo "eyJjaGFsbGVuZ2UiOiJoZWxsbyJ9" | base64 -D
+```
 
+You can see that it is just an encoded representation of the challenge we sent in. 
+
+```
+{"challenge":"hello"}
+```
+#### Utilize a web action
+You may have noticed that when we created the action, we specified `--web true`. Web Actions are OpenWhisk Actions, which are annotated, to quickly enable developers to build web-based applications.  The web Action must return a JSON object. We are going to play with different ways to invoke this action outside of Runtime in this section.
+
+Let's begin with the full url of your action
+```
+wsk action get webhook --url
+```
+You should get something that looks like this
+```
+ok: got action webhook
+https://runtime.adobe.io/api/v1/web/<namespace>/default/webhook
+```
+
+**Important note: please use `https://adobeioruntime.net` in replacement of `https://runtime.adobe.io` during this workshop. Due to a recent change -- the domain name for Adobe I/O Runtime has been changed. **
+
+---
+---
+##### Explore #2
+Try opening this URL in your web browser. What did you get? How can you attach the parameters like you did in the last section?
+
+Or try invoking the Action by using different curl commands. What did you get as a result?
+```
+curl https://adobeioruntime.net/api/v1/web/<namespace>/default/webhook?challenge=1
+curl https://adobeioruntime.net/api/v1/web/<namespace>/default/webhook.json -d "challenge"="hello"
+```
+---
+---
+
+To read more on web actions in Openwhisk: https://github.com/apache/incubator-openwhisk/blob/master/docs/webactions.md#web-actions
+
+---
+
+### Modify your Webhook in Runtime for Triggers Events
+Now that we have a sample webhook, let's modify it for Triggers Events. 
+
+#### Go to Adobe I/O Console to update your Event registration
+Before we start, let's start a separate shell and type in 
+```
+wsk activation poll
+```
+This allows you to see all console logs flowing through, instead of inspecting the logs by each individual activation. 
+
+Then, let's update your Events configuration in Console.
 - After signing in to the [Adobe I/O Console](https://console.adobe.io/), find your existing Integration.
-- Navigate to the `JWT` tab. Console has helped generated a sample JWT payload here for you. 
-- Grab the `private.key` file you generated in Chapter 2 during Integration creation, and paste in the full key
-- You will see the generated JWT on the left side, and a curl command on the right. 
-- Run the `Sample CURL Command` and try to use this new acess token in your Postman
-    - Don't forget to also update the `api_key` as well as `access_token` so that you are connecting to Campaign using credentials that you've generated.
+- Navigate to the `Events` tab, and click `view` to expand your existing Event registration. 
+- Place your Runtime webhook url in `Webhook URL`
+- Click save.
 
-##### b - Programatically
-Let's try to build this in Runtime as well. Navigate to the `campaign-sample` code that you've downloaded. 
-
-As an alternative to writing all your action code in a single JavaScript source file, you can write an action as a npm package. We are going to try it in this section.
-
-**Understand the code**
-- Open `app.js`, scroll all the way down, you can see this line. ```exports.main = main;``` Note that the action is exposed through exports.main; the action handler itself can have any name, as long as it conforms to the usual signature of accepting an object and returning an object (or a Promise of an object). Per Node.js convention, you must either name this file index.js or specify the file name you prefer as the main property in package.json. (like we did in this case to use `app.js`)
-- Within `function main(params)`, you can see that instead of returning an object, I'm returning a Promise object. JavaScript functions that run asynchronously may need to return the activation result after the main function has returned. You can accomplish this by returning a Promise in your action. We are calling the Campaign API here and need this action to run asynchronously.
-- Runtime currently doesn't provide any out-of-the-box npm packages (we will in the future), so now, if you want to use npm packages, you'll need to use a zipped action to include all dependencies (like `request` and `jwt-simple` in this sample)
-
----
----
-
-
-##### Challenge # 3
-Make sure you understand the code and what's happening here. Follow the following instructions to get your access token! Your function should be able to print out the access token in the Console when done. 
-
-- `config.js` is where all the credentials and keys are stored. Let's begin with populating this file with the information in your Integration. 
-- When complete, we can zip this up and upload it into Runtime
-    ```
-    cd campaign-sample
-    npm install
-    zip -r action.zip .
-    wsk action create campaign-sample --kind nodejs:6 --web true action.zip
-    ```
-- Always remember to move your action.zip file out of the existing folder, so that you won't accidentally zip in old versions
-    ```
-    mv action.zip ../  
-    ```
-
----
----
-
-##### Challenge # 4
-
-Using the access token printed from Console. Writ a simple zipped action that make a `GET` call to retrieve profiles. 
-
-Here's a short sample code in Request to help you get started. Don't forget to include the dependencies!
+Now if we go back to the shell window you just opened for activation logs, you should see something like this:
 ```
-var accessToken, clientID, tenant;
+Activation: 'webhook' (44364f95f65a4c67b64f95f65a8c6718)
+[
+    "2018-06-18T18:26:22.877624302Z stdout: handling challenge"
+]
+```
+Congratulations! Your Runtime action has officially been registered as the webhook for your Triggers action.
 
-var options = { 
-    method: 'GET',
-    url: 'https://mc.adobe.io/' + tenant +'/target/activities',
-    headers: {
-        'cache-control': 'no-cache',
-        'content-type': 'application/vnd.adobe.target.v1+json',
-        'x-api-key': clientID,
-        authorization: accessToken 
+#### Test your sample webhook
+Next, let's try to trigger the end-to-end flow. Go back to your AEM site, based on the rules you've set up for your Trigger, get a Trigger to fire.
+
+##### Success
+If all goes well, you should be able to see 
+- A new Trigger appear in the Triggers UI
+- A new Activation log in Runtime that says `event received.`
+
+##### Debug needed
+If not... Analytics Triggers events aren't coming through to your integration, a breakdown in communication may have occurred at any step in the events process. You'll need to check each step in order to verify where the breakdown has occurred and then fix your configuration accordingly.
+
+The process of communicating Analytics Triggers via I/O Events consists of the following steps:
+(1) Web page > (2) Analytics call > (3) Analytics Triggers > (4) Adobe I/O Events > (5) Webhook
+
+**Debug 1 > 2**
+If 1 > 2 is working, it means that Analytics code has been embedded in your webpage, and analytics calls (**Note:** not necessarily Trigger calls) are firing and going through. 
+You can verify your Adobe Analytics connection via the Debugger:
+
+https://chrome.google.com/webstore/detail/debugger-for-adobe-analyt/bdingoflfadhnjohjaplginnpjeclmof
+https://chrome.google.com/webstore/detail/adobe-experience-cloud-de/ocdmogmohccmeicdhlhhgepeaijenapj
+
+**Debug 2 > 3**
+If 2 > 3 is working, it means that your Triggers pattern is valid and reflects the customer behavioral pattern that you are trying to mirror. If you verified that the Analytics connection is going through, but no Trigger has been fired, you can try the following methods:
+
+- Make sure you have outlasted the &ldquo;inactivity time&rdquo; that you've set: for example, if you set it to be 10 minutes, then make sure there are absolutely no actions on your page for 10 minutes so that Triggers can identify this pattern and fire.
+- Compare your Triggers setting to your Analytics live output.
+- Make sure you are talking to the correct reporting suite.
+- Make sure you are using the correct eVar/prop to set up rules in Triggers.
+- If you have a URL, try removing the prefix (use 'localhost' instead of 'http://localhost').
+
+**Debug 3 > 4**
+If 3 > 4 is working, it means that your Triggers payload is arriving at the Adobe I/O Event Gateway. If you can see your Trigger fired, but it's not arriving at your webhook, you should first debug 4 > 5 to make sure your webhook is valid and ready to receive events. If 4 > 5 works and you are still not receiving events, it could be that something went wrong in the Triggers-Pipeline-Event Gateway process. Unfortunately, there's no way to easily debug this step at the moment. Please open an issue on the [Events GitHub project](https://github.com/adobeio/adobeio-documentation). 
+
+**Debug 4 > 5**
+If 4 > 5 is working, it means that your webhook is valid and ready to receive events. You can verify your connection by selecting **Retry** for your webhook on I/O Console UI. You should receive a challenge. Your webhook needs to be able to return the challenge to be marked as a valid webhook. 
+
+---
+---
+
+##### Challenge #1 
+If you are able to receive the event in your Runtime namespace, by default, the `sample-webhook.js` action only prints `event received.`. Can you try to modify your `sample-webhook.js` so that it prints the actual event payload?
+
+---
+---
+
+#### Modify your webhook for Triggers
+Now that you are able to see Triggers working end-to-end, let's figure out how you can better utilize and read the Triggers payload in preparation for the Campaign integration. A sample payload has been provided below to help you figure the structure.
+
+```
+*Sample Triggers Payload*
+{
+  "event_id": "52ebf673-8aeb-4347-8852-bf86a18292e4",
+  "event": {
+    "envelopeType": "DATA",
+    "partition": 13,
+    "offset": 438465548,
+    "createTime": 1516324157242,
+    "topic": "triggers",
+    "com.adobe.mcloud.pipeline.pipelineMessage": {
+      "header": {
+        "messageType": "TRIGGER",
+        "source": "triggers",
+        "sentTime": 1516324157228,
+        "imsOrg": "C74F69D7594880280A495D09@AdobeOrg",
+        "properties": [
+          {
+            "name": "trace",
+            "value": "false"
+          },
+          {
+            "name": "sourceFirstTimestamp",
+            "value": "1516324106"
+          },
+          {
+            "name": "sourceLastTimestamp",
+            "value": "1516324128"
+          },
+          {
+            "name": "triggerFiredTimestamp",
+            "value": "1516324153995"
+          }
+        ],
+        "messageId": "1a69fc40-7600-4928-b7bb-d66588a045f3"
+      },
+      "com.adobe.mcloud.protocol.trigger": {
+        "triggerId": "697514a8-3337-4efc-ba75-1f0ba896c288",
+        "triggerTimestamp": 1516324157228,
+        "mcId": "00000000000000000000000000000000000000",
+        "enrichments": {
+          "analyticsHitSummary": {
+            "dimensions": {
+              "eVar3": {
+                "type": "string",
+                "data": [
+                  "localhost:4502/content/we-retail.html",
+                  "localhost:4502/content/we-retail/us/en/men.html",
+                  "localhost:4502/content/we-retail.html",
+                  "localhost:4502/content/we-retail/us/en.html",
+                  "localhost:4502/content/we-retail/us/en.html",
+                  "localhost:4502/content/we-retail/us/en/products/men/shirts/eton-short-sleeve-shirt.html",
+                  "localhost:4502/content/we-retail/us/en/products/men/shirts/eton-short-sleeve-shirt.html",
+                  "localhost:4502/content/we-retail/us/en/men.html",
+                  "localhost:4502/content/we-retail/us/en/user/cart.html"
+                ],
+                "name": "eVar3",
+                "source": "session summary"
+              },
+              "pageURL": {
+                "type": "string",
+                "data": [
+                  "http://localhost:4502/content/we-retail.html",
+                  "",
+                  "",
+                  "http://localhost:4502/content/we-retail/us/en.html",
+                  "",
+                  "",
+                  "http://localhost:4502/content/we-retail/us/en/products/men/shirts/eton-short-sleeve-shirt.html",
+                  "http://localhost:4502/content/we-retail/us/en/men.html",
+                  "http://localhost:4502/content/we-retail/us/en/user/cart.html"
+                ],
+                "name": "pageURL",
+                "source": "session summary"
+              }
+            },
+            "products": {}
+          }
+        },
+        "triggerPath": [
+          {
+            "timestamp": 1516324118010,
+            "stateId": "start_and_and",
+            "transition": "null"
+          },
+          {
+            "timestamp": 1516324148711,
+            "stateId": "vmi_and_1",
+            "transition": "conditional -> select * where evars.evars.eVar3 like 'localhost:4502/content/we-retail/us/en/user/cart.html'"
+          },
+          {
+            "timestamp": 1516324148711,
+            "stateId": "notify_wait",
+            "transition": "states visited -> [StateVisitedNode [stateId=vmi_and_1, count=1, operator=GE]]"
+          },
+          {
+            "timestamp": 1516324153994,
+            "stateId": "notify",
+            "transition": "inactive_timeout -> 5"
+          }
+        ]
+      }
     }
-};
-
-request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-
-    console.log("Get Activity Result: " + body);
-    resolve({body: body});
-});
+  }
 ```
 
 ---
 ---
 
-##### Challenge # 5
-Time  to combine challenge 3 with challenge 4 to make a single action in Runtime that 1) generates the JWT 2) exchanges it for access token 3) makes a `GET` call to retrieve profiles from Campaign.
-
-Be careful with the Promises -- given the actions are asynchrous, the order could get tricky.
+##### Challenge #2 
+Given the following sample Triggers payload, can you figure out how to modify your webhook to print out the `triggerId` in your console?  
 
 ---
 ---
 
 ### Navigate
-**Back: ** Chapter 2 - [Receive your Trigger in a Runtime action](chapter-2.md)
+**Back: ** Chapter 2 - [Set up your first Trigger](chapter-2.md)
 **Next: ** Chapter 4 - [Orchestrate Trigger to Campaign in Runtime](chapter-4.md)
