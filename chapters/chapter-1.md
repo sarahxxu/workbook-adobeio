@@ -4,7 +4,7 @@ In this section, we'll step through the process of setting up Analytics, connect
 #### Create integration with Campaign
 - Sign onto the [Adobe I/O Console](https://console.adobe.io/), select `New Integration`.
     - If you are in multiple Adobe orgs, please make sure you are in the workshop org.
-    - Choose `call API`, then `Adobe Analytics`
+    - Choose `access an API`, then `Adobe Campaign`
     - Provide the Name and Description for your integration, please use `ioworkshop` + your assigned user ID (e.g. `ioworkshopuser01`) to avoid conflict.
     - You will then asked to upload a public certificate for your integration, please run the follow command in your shell.
         - ```openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt```
