@@ -41,14 +41,6 @@ There are four default calls related to Profile in that collection. Play with th
 - `POST` to create new profile
 - `PATCH` to update profile
 
-
----
----
-
-##### Explore #3
-If you've tried these four, tweak the call to see what else you can do with profile and data via the Campaign Standard API.
-Refer to [Campaign Standard API Documentation](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#let-39-s-start-with-the-api) for some idea!
-
 ---
 ---
 
@@ -165,60 +157,6 @@ The JWT Workflow contains 6 steps
 - 5- Create your JSON Web Token (JWT)
 - 6- Exchange your JWT for an Access Token
 
-We have completed 1-4 in previous steps, we'll focus on step 5 and 6 in the next section. 
-
-**5- Create your JSON Web Token (JWT)**
-Use your client credentials generated for your integration to create a JWT, and sign it with your private key. The JWT encodes all of the identity and security information that Adobe needs to verify your identity and grant you access to Adobe services and events.
-
-Several public libraries are available for creating a JWT. The JWT must be digitally signed and base-64 encoded for inclusion in the access request. 
-
-
-**6- Exchange your JWT for an Access Token**
-
-To initiate an API session, you use the JWT to obtain an access token from Adobe, by making a POST request to Adobe's Identity Management Service (IMS).
-
-Send a POST request to:
-```
-https://ims-na1.adobelogin.com/ims/exchange/jwt/
-```
-
-The body of the request should contain URL-encoded parameters with your Client ID (API Key), Client Secret, and JWT:
-```
-client_id={api_key_value}&client_secret={client_secret_value}&jwt_token={base64_encoded_JWT}
-```
-
-Sample Request
-
-```
-curl -X POST \
-  https://ims-na1.adobelogin.com/ims/exchange/v1/jwt \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'jwt_token={encoded-jwt}&client_id={client-id}&client_secret={client-secret}'
-```
-
-Sample Response
-```
-{
-  "token_type": "bearer",
-  "access_token": "{encoded-token}",
-  "expires_in": 86399981
-}
-```
-
-Now that we've walked through the high level task, let's dig in to see 1) how you can use I/O Console as a helper in this process and 2) how you can do it programatically.
-
-##### a - Console as helper
-The Console has built-in functionality to help you generate a signed and encoded JWT, and provides a customized curl command that helps you exchange for the access token. 
-
-- After signing in to the [Adobe I/O Console](https://console.adobe.io/), find your existing Integration.
-- Navigate to the `JWT` tab. Console has helped generated a sample JWT payload here for you. 
-- Grab the `private.key` file you generated in Chapter 2 during Integration creation, and paste in the full key
-- You will see the generated JWT on the left side, and a curl command on the right. 
-- Run the `Sample CURL Command` and try to use this new acess token in your Postman
-    - Don't forget to also update the `api_key` as well as `access_token` so that you are connecting to Campaign using credentials that you've generated.
-
-##### b - Programatically
 Let's try to build this in Runtime as well. Navigate to the `campaign-sample` code that you've downloaded. 
 
 As an alternative to writing all your action code in a single JavaScript source file, you can write an action as a npm package. We are going to try it in this section.

@@ -29,7 +29,7 @@ Follow these steps to set up an Analytics extension with Launch:
     - You can use `example.com` for the domain name
 - Go to `Extensions`→`Catalog` and install Adobe Analytics extension. Enter the Adobe Analytics report suite name (the one you just set up) manually in the textbox.
     - Note: You can get the full report suite id in Adobe Analytics->Admin→Report Suites
-- Add `Experience Cloud ID Service` extensions with default settings and click save. 
+- Install `Experience Cloud ID Service` extensions with default settings and click save. 
 
 Now that we have a high-level extension set up, let's add an Analytics rule as below:
 - Select the `Rule` tab
@@ -67,7 +67,7 @@ Here's the steps breakdown
 - Come to I/O Console Integration window upload the downloaded AEM-Adobe-IMS.crt in Public Key Certificates.
 - Copy the Client ID, Client Secret from Overview and the JWT Payload and Authorization Server info from "JWT" tab.
 - Come back to the AEM IMS Configuration next step, fill out details from I/O Console integration. Save the configuration.
-- Go to AEM Instance->Tools→Cloud Services→Adobe Launch Configurations.
+- Go to AEM Instance -> Tools -> Cloud Services -> Adobe Launch Configurations.
 - Create a new configuration under we-retail website. Select the IMS Config, company and property based on the property and report suite you just created. 
 - Go to AEM instance->Sites.
 - Select "Card View" from upper right corner and click on (info) properties icon.
@@ -116,8 +116,8 @@ Now that we have Analytic set up with your AEM site via DTM, we can start to set
     - Select the Report Suite that you just created.
 - On the Triggers Settings page, define the business rules for your trigger. You can drag a dimension/metric box from the left panel to the right side of the screen and then specify the business rules for what must happen and what must not happen in a session. 
     - For your rules, set it to
-        - Visit must include `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/cart.html"` OR `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout.html"` OR ` Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout/order.html"`
-        - Visit must not include `Custom eVar 3 Like "localhost:4502/content/we-retail/us/en/user/checkout/order/thank-you.html"`
+        - Visit must include Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/cart.html OR Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout.html OR Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout/order.html
+        - Visit must not include Custom eVar 3 `Like` protocal (e.g. http://) + localhost:4502/content/we-retail/us/en/user/checkout/order/thank-you.html
     - For `Trigger after no action for`, set it to 10 minutes
     - For Include Meta Data, set it to include `Custom eVar 3`
 - Save your changes and now you should see your Triggers definition displayed.

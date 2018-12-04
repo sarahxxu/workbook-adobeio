@@ -64,4 +64,4 @@ wsk property set --apihost runtime.adobe.io --auth <Your auth> --namespace <Your
 ```
 
 ### Navigate
-**Next: ** Chapter 1 - [Set up your first Trigger](chapter-1.md)
+**Next: ** Chapter 1 - [Call Adobe Campaign Standard from Runtime](chapter-1.md)
