@@ -23,7 +23,7 @@ Please note that these credentials and IDs are only accessible for today
 | Dynamics CRM access token | eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IndVTG1ZZnNxZFF1V3RWXy1oeFZ0REpKWk00USIsImtpZCI6IndVTG1ZZnNxZFF1V3RWXy1oeFZ0REpKWk00USJ9.eyJhdWQiOiJodHRwczovL2Fkb2JlaW8uY3JtLmR5bmFtaWNzLmNvbS8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mMGM5ZWI4My1iZTA5LTQ5NzktODE2YS1iZjk3M2Q5ZWVmNWQvIiwiaWF0IjoxNTQxNDkzNTg5LCJuYmYiOjE1NDE0OTM1ODksImV4cCI6MTU0MTQ5NzQ4OSwiYWNyIjoiMSIsImFpbyI6IkFTUUEyLzhKQUFBQWVkZVJBTmJxV1MvdkphOEgrYzdIUEF6MnRyRFYvdk5YVlNXS0NyZ3hrSEE9IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6ImU0Yjc0YzE5LWMxYjYtNGNiMy05ZTFlLWJlN2JhNDQ4ODM0MiIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiWHUiLCJnaXZlbl9uYW1lIjoiU2FyYWgiLCJpcGFkZHIiOiIxOTMuMTA0LjIxNS4xMSIsIm5hbWUiOiJTYXJhaCBYdSIsIm9pZCI6ImM5ZGNmNmViLTYxZDYtNGVkMy05OGNhLTE3ODQxYzFjODBjMSIsInB1aWQiOiIxMDAzN0ZGRUE0QkMxRDM0Iiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoidW9pdnBWalVQU3Z6OVU0bUZSeFR4RXFRN0NnVkxGTUZMaW53Y0g0TF9YVSIsInRpZCI6ImYwYzllYjgzLWJlMDktNDk3OS04MTZhLWJmOTczZDllZWY1ZCIsInVuaXF1ZV9uYW1lIjoic2F4dUBhZG9iZUlPLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6InNheHVAYWRvYmVJTy5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiIwdW1OSnZRb2JFQ00xTWNweHpNTkFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyI2MmU5MDM5NC02OWY1LTQyMzctOTE5MC0wMTIxNzcxNDVlMTAiXX0.PHUEmqo7Vd1xB2k_PZP4GWaLAmUNz1tDxiww3n4JSe_IgeRVNZfdU6kxlwdwZIwKtujHTDPlAcpux5xQSsAMas3Oy2jOHUNSWbtUnhVoMSUM_Wv_vBpI-f3D0wi_YDP4uOP64CZtACNPmkjxJJYq1zZwoFReLyyJze9Tv8HGlbJgoPjxiL94LVJ45GPp0IlvJyNay0JDepqazsQPJQYeUUhWXtbyd72u6xqu3_JVLjyo9TzvXud72AqaQNY-U0Ug5TCGSZZq2ZQvwekqQVRar3HIy0QkVryFKmuA392ULZnqihK-iY1OiaKrQ4UP9gqJkTZPNrwbXgIt2xpOazDg2Q |
 
 #### Resources to download
-- [Runtime namespaces](namespaces.md)
+- [Runtime namespaces](/code/namespaces.csv)
 - [Triggers API Postman Collection](/postman/Triggers.postman_collection.json)
 - [Campaign Standard API Postman Collection](/postman/Campaign.postman_collection.json)
 - [Dynamics CRM Web API Postman Collection](/postman/Dynamics.postman_collection.json)
@@ -34,8 +34,8 @@ Please note that these credentials and IDs are only accessible for today
     
 #### Chapters
 - Chapter 0 - [Before you start](/chapters/chapter-0.md)
-- Chapter 1 - [Set up your first Trigger](/chapters/chapter-1.md)
-- Chapter 2 - [Receive your Trigger in a Runtime action](/chapters/chapter-2.md)
-- Chapter 3 - [Connect to Adobe Campaign Standard from Runtime](/chapters/chapter-3.md)
+- Chapter 3 - [Call Adobe Campaign Standard from Runtime](/chapters/chapter-1.md)
+- Chapter 1 - [Set up your first Trigger](/chapters/chapter-2.md)
+- Chapter 2 - [Receive your Trigger in a Runtime action](/chapters/chapter-3.md)
 - Chapter 4 - [Orchestrate Trigger to Campaign in Runtime](/chapters/chapter-4.md)
 - Chapter 5 - [[Bonus] Query Dynamics CRM to enrich Transactional Message](/chapters/chapter-5.md)

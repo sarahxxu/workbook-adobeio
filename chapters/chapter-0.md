@@ -49,7 +49,7 @@ Further OpenSSL instructions for Windows users:
 
 ### Set up I/O Runtime namespace
 
-Please make sure you've installed the OpenWhisk CLI at this step. Go to [Runtime namespaces](../namespaces.md) file to find your assigned namespace based on your assign number (e.g. `user01`), create a `.wskprops` file containing your authorization key, your namespace, and the path to the Runtime API host. Here's an example:
+Please make sure you've installed the OpenWhisk CLI at this step. Go to [Runtime namespaces](/code/namespaces.csv) file to find your assigned namespace based on your assign number (e.g. `user01`), create a `.wskprops` file containing your authorization key, your namespace, and the path to the Runtime API host. Here's an example:
 ```
 AUTH=<Your auth>
 APIHOST=runtime.adobe.io
