@@ -34,8 +34,8 @@ Please note that these credentials and IDs are only accessible for today
     
 #### Chapters
 - Chapter 0 - [Before you start](/chapters/chapter-0.md)
-- Chapter 3 - [Call Adobe Campaign Standard from Runtime](/chapters/chapter-1.md)
-- Chapter 1 - [Set up your first Trigger](/chapters/chapter-2.md)
-- Chapter 2 - [Receive your Trigger in a Runtime action](/chapters/chapter-3.md)
+- Chapter 1 - [Call Adobe Campaign Standard from Runtime](/chapters/chapter-1.md)
+- Chapter 2 - [Set up your first Trigger](/chapters/chapter-2.md)
+- Chapter 3 - [Receive your Trigger in a Runtime action](/chapters/chapter-3.md)
 - Chapter 4 - [Orchestrate Trigger to Campaign in Runtime](/chapters/chapter-4.md)
 - Chapter 5 - [[Bonus] Query Dynamics CRM to enrich Transactional Message](/chapters/chapter-5.md)
