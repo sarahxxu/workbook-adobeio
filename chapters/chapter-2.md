@@ -42,7 +42,6 @@ Now that we have a high-level extension set up, let's add an Analytics rule as b
     - for `Events`, add `Core - Page Bottom`
     - for `Then`, add two actions: `Adobe Analytics - Set Variables` THEN `Adobe Analytics - Send Beacon`
         - In the `Adobe Analytics-Set Variables` action, add `eVar3`, select from the data element `pageURL`
-- Go to `Adapters`, click on `Add Adapter` and create an akamai adapter as shown below.
 
 Now that we have the extension set up, let's deploy it. 
 - Go to `Environments` and create `Dev`, `Stage` and `Production` environment.
@@ -56,24 +55,32 @@ Now that we have the extension set up, let's deploy it.
 Here's a video:https://helpx.adobe.com/experience-manager/kt/integration/using/adobe-launch-integration-tutorial-understand.html
 
 Here's the steps breakdown
-- Go to https://console.adobe.io
-- Click on "New Integration".
-- Select "Access an API" and click on continue.
-- Select "Launch, by Adobe" and click on continue.
-- Select "New Integration" for fresh setup and click on continue.
+
+**Grab an IMS Certificate from AEM**
 - Open the AEM instance in new window (http://localhost:4502) click on `Tools`->Security→Adobe IMS Configurations.
-- Create new Adobe IMS Configuration certificate.
-- Download the public key certificate by clicking on "Download Public Key", this certificate needs to be uploaded in the I/O console integration.
-- Come to I/O Console Integration window upload the downloaded AEM-Adobe-IMS.crt in Public Key Certificates.
-- Copy the Client ID, Client Secret from Overview and the JWT Payload and Authorization Server info from "JWT" tab.
-- Come back to the AEM IMS Configuration next step, fill out details from I/O Console integration. Save the configuration.
+- Create new Adobe IMS Configuration certificate. (it's a checkbox)
+- Download the public key certificate by clicking on "Download Public Key", this certificate will be used for uploading in the I/O console integration.
+
+**Use this certificate in your I/O Integration**
+- Go to https://console.adobe.io
+- Select the integration you created earlier, in the Overview screen, add a public key and upload the certificate you just downloaded. 
+- Toggle to the "Service" tab, and add "Adobe Experience Platform Launch" to your integration.
+
+**Use the I/O Console Integration to set up an IMS Configuration in AEM**
+- Open the AEM instance, click on `Tools`->Security→Adobe IMS Configurations.
+- Use the Client ID, Client Secret from Overview and the JWT Payload and Authorization Server info from "JWT" tab to fill the configuration form.
+
+**Set up Launch Integration**
 - Go to AEM Instance -> Tools -> Cloud Services -> Adobe Launch Configurations.
 - Create a new configuration under we-retail website. Select the IMS Config, company and property based on the property and report suite you just created. 
+
+**Add it to your site**
 - Go to AEM instance->Sites.
 - Select "Card View" from upper right corner and click on (info) properties icon.
-- Go to Advanced tab and select Cloud Configuration under Configuration.
+- Go to "Advanced"" tab and select Cloud Configuration under Configuration.
 - Select the we-retail path and save & close the configuration.
-- Open the We-Retail website→Right click->Inspect→Click on Sources. You will see that the Launch scripts is getting fired and events are flowing in the designated report suite.
+
+---
 
 **For Launch with AEM 6.3**
 AEM 6.3 doesn't have the official connector for Launch. To connect your AEM 6.3 instance with Launch you can follow the below work around:
@@ -97,6 +104,7 @@ AEM 6.3 doesn't have the official connector for Launch. To connect your AEM 6.3 
 - Go to Cloud Services→Add Configuration→Select Dynamic Tag Management
 - Select the Launch integration you created in previous steps. Click Save and Close.
 - Open the We-Retail website→Right click->Inspect→Click on Sources. You will see that the Launch scripts is getting fired and events are flowing in the designated report suite.
+
 
 #### Test your updated rules in AEM
 If your rules have been successfully updated, go back to your We.Retail home page, and open your Analytics debug tool. You should see analytics calls with your report suite and eVar3 as page url captured.

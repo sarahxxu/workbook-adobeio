@@ -174,6 +174,13 @@ As an alternative to writing all your action code in a single JavaScript source 
 Make sure you understand the code and what's happening here. Follow the following instructions to get your access token! Your function should be able to print out the access token in the Console when done. 
 
 - `config.js` is where all the credentials and keys are stored. Let's begin with populating this file with the information in your Integration. 
+    - You can locate the following information at:
+        - campaignTenant : [Frontpage](../README.md)
+        - campaignClientID : Adobe I/O Console Integration
+        - campaignClientSecret : Adobe I/O Console Integration
+        - campaignOrgID : Adobe I/O Console Integration
+        - campaignTechnicalAccount : Adobe I/O Console Integration
+        - campaignPEM : your private.key file (Please make sure to collapse it into a row and escape each row with ```\n```.
 - When complete, we can zip this up and upload it into Runtime
     ```
     cd campaign-sample
@@ -184,45 +191,45 @@ Make sure you understand the code and what's happening here. Follow the followin
 - Always remember to move your action.zip file out of the existing folder, so that you won't accidentally zip in old versions
     ```
     mv action.zip ../  
+- Invoke your action and you should see a JWT and an access token printed.
     ```
-
+    wsk action invoke campaign-sample --blocking
+    ```
 ---
 ---
 
 ##### Challenge # 4
 
-Using the access token printed from Console. Writ a simple zipped action that make a `GET` call to retrieve profiles. 
+You should be able to see a block of code commented out in ```app.js```, it's an sample ```GET``` call to Campaign Standard. 
 
-Here's a short sample code in Request to help you get started. Don't forget to include the dependencies!
-```
-var accessToken, clientID, tenant;
+    ```
+    var options = { method: 'GET',
+      url: 'https://mc.adobe.io/' + tenant +'/campaign/profileAndServices/profile/email?_lineCount=10',
+      headers: {
+          'cache-control': 'no-cache',
+          'x-api-key': clientID,
+          authorization: accessToken }
+    };
+    
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log("Get Top 10 Profiles: " + body);
+    });
+    ```
 
-var options = { 
-    method: 'GET',
-    url: 'https://mc.adobe.io/' + tenant +'/target/activities',
-    headers: {
-        'cache-control': 'no-cache',
-        'content-type': 'application/vnd.adobe.target.v1+json',
-        'x-api-key': clientID,
-        authorization: accessToken 
-    }
-};
+Uncomment the code, reinstall, zip and update your campaign-sample action. 
+    ```
+    cd campaign-sample
+    npm install
+    zip -r action.zip .
+    wsk action update campaign-sample --kind nodejs:6 --web true action.zip
+    ```
 
-request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-
-    console.log("Get Activity Result: " + body);
-    resolve({body: body});
-});
-```
-
----
----
-
-##### Challenge # 5
-Time  to combine challenge 3 with challenge 4 to make a single action in Runtime that 1) generates the JWT 2) exchanges it for access token 3) makes a `GET` call to retrieve profiles from Campaign.
-
-Be careful with the Promises -- given the actions are asynchrous, the order could get tricky.
+Then try to invoke it again and see if you can get a list of profiles back!
+    ```
+    wsk action invoke campaign-sample --blocking
+    ```
 
 ---
 ---

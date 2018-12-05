@@ -43,6 +43,8 @@ function main(params) {
     return new Promise (function (resolve, reject) {
 
         try {
+            
+            // get access token
             var url = 'https://ims-na1.adobelogin.com/ims/exchange/jwt/';
             var formData = {
                 client_id: clientID,
@@ -57,7 +59,22 @@ function main(params) {
                     var result = JSON.parse(body);
                     accessToken = "Bearer " + result.access_token;
                     console.log("Access Token: " + accessToken);
-                }
+                    
+                    // make a call to get profiles
+//                    var options = { method: 'GET',
+//                          url: 'https://mc.adobe.io/' + tenant +'/campaign/profileAndServices/profile/email?_lineCount=10',
+//                          headers: {
+//                              'cache-control': 'no-cache',
+//                              'x-api-key': clientID,
+//                              authorization: accessToken }
+//                      };
+//
+//                      request(options, function (error, response, body) {
+//                          if (error) throw new Error(error);
+//
+//                          console.log("Get Top 10 Profiles: " + body);
+//                      });
+//                }
             });
 
         } catch (e) {

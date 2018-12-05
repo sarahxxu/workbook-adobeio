@@ -5,7 +5,7 @@
     - Refer to [Admin Console helpx page](https://helpx.adobe.com/enterprise/using/admin-console.html)  if you run into issues accessing your org. 
 - In your organization, make sure you have access to the following Adobe Solutions
     - Adobe Launch
-    - Analytics & Triggers (Data Workbench)
+    - Analytics & Triggers (Data Workbench or Livestream)
     - Campaign Standard
 
 ---
@@ -19,17 +19,19 @@
 
 ### Set up your local
 #### Download
-Download the resources listed on top and make sure they are accessible on your local.
+Download [these resources](https://www.dropbox.com/sh/bozigm6u4tix6f8/AADG8-a-En1fp7m4kXgM5cboa?dl=0) and make sure they are accessible on your local.
 
 #### Required tools
 In this workshop you would need the following items set on on your local:
 - Adobe Experience Manager instance (6.4 preferred)
-  - [We.Retail Sample site](https://github.com/Adobe-Marketing-Cloud/aem-sample-we-retail/releases) (Please make sure you are installing a version compatible with your AEM version)
+    - Please check to make sure you have a We.Retail Sample Site installed on your AEM instance
+    - if not, you can install it at [We.Retail Sample site](https://github.com/Adobe-Marketing-Cloud/aem-sample-we-retail/releases) (Please make sure you are installing a version compatible with your AEM version)
 - [Postman](https://www.getpostman.com/apps)
 - [OpenWhisk CLI](https://github.com/apache/incubator-openwhisk-cli/releases)
     - Download the executable from the [OpenWhisk GitHub repository](https://github.com/apache/incubator-openwhisk-cli/releases). Choose the version that matches your operating system and download the compressed archive.
     - Extract the executable from the compressed archive and place it in a folder of your choice.
     - Add the folder into which you placed the executable to your `PATH` environment variable. This enables you to call the CLI from any command-line window. Or you use the CLI directly in the folder using `./wsk`.
+        - ```export PATH=$PATH:``` + ```path to your wsk file```
 
 For Windows user, please make sure you have Shell and the following set up
 - [OpenSSL](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip)
@@ -49,7 +51,17 @@ Further OpenSSL instructions for Windows users:
 
 ### Set up I/O Runtime namespace
 
-Please make sure you've installed the OpenWhisk CLI at this step. Go to [Runtime namespaces](/code/namespaces.csv) file to find your assigned namespace based on your assign number (e.g. `user01`), create a `.wskprops` file containing your authorization key, your namespace, and the path to the Runtime API host. Here's an example:
+Please make sure you've installed the OpenWhisk CLI at this step. Go to [Runtime namespaces](/code/namespaces.csv) file to find your assigned namespace based on your assign number (e.g. `user01`)
+
+#### Method A
+Configure your instance of the CLI is to do it through a CLI command. Open a command-line window and type the following command:
+
+```
+wsk property set --apihost runtime.adobe.io --auth <Your auth> --namespace <Your namespace>
+```
+
+#### Method B
+An alternative method is to create a `.wskprops` file containing your authorization key, your namespace, and the path to the Runtime API host. Here's an example:
 ```
 AUTH=<Your auth>
 APIHOST=runtime.adobe.io
@@ -57,10 +69,10 @@ NAMESPACE=<Your namespace>
 ```
 Once your `.wskprops` is ready and set up with your authorization and namesapce, place it in your home directory, where the CLI can access it to set those properties when it starts.
 
-An alternative method to configure your instance of the CLI is to do it through a CLI command. Open a command-line window and type the following command:
-
+#### Check your auth
+You can then check your properties via 
 ```
-wsk property set --apihost runtime.adobe.io --auth <Your auth> --namespace <Your namespace>
+wsk property get
 ```
 
 ### Navigate
