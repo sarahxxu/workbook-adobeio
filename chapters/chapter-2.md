@@ -69,6 +69,7 @@ Here's the steps breakdown
 **Use the I/O Console Integration to set up an IMS Configuration in AEM**
 - Open the AEM instance, click on `Tools`->Security→Adobe IMS Configurations.
 - Use the Client ID, Client Secret from Overview and the JWT Payload and Authorization Server info from "JWT" tab to fill the configuration form.
+- Your authorization server would be `"https://ims-na1.adobelogin.com`.
 
 **Set up Launch Integration**
 - Go to AEM Instance -> Tools -> Cloud Services -> Adobe Launch Configurations.
